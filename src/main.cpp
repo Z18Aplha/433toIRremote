@@ -8,7 +8,7 @@ IRsend irTransmitter; //irLed must be connected to PWM PIN 3
 //receiving variables
 unsigned long prev_signal = 0;
 unsigned long timestamp = 0;
-unsigned long adress = 117440512;  //0x7000000
+unsigned long adress = 117440512;
 unsigned long onkyo_internal_offset = 1258291200;
 unsigned long LED_internal_offset = 16711680;
 
