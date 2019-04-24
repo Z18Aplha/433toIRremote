@@ -3,7 +3,7 @@
 #include <IRremote.h>
 
 RCSwitch myReceiver = RCSwitch();
-IRsend irTransmitter; //irLed must be connected to PWM PIN 3
+IRsend irTransmitter; //irLed must be connected to PWM PIN D3
 
 //receiving variables
 unsigned long prev_signal = 0;
@@ -18,7 +18,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("device started");
 
-  myReceiver.enableReceive(0);  // Receiver on interrupt 0 => that is pin #2
+  myReceiver.enableReceive(0);  // Receiver on interrupt 0 => that is pin D2
 
   Serial.println("device ready");
 }
@@ -32,15 +32,19 @@ void loop() {
     unsigned long signal = myReceiver.getReceivedValue();
     unsigned long code = signal - adress;
     bool send = true;
+    String code_hex = String(code, HEX);
 
 
     Serial.println("");
     Serial.print("message received: ");
     Serial.println(signal);
     Serial.print("code extracted: ");
-    Serial.println(code);
+    Serial.print(code);
+    Serial.print(" (0x");
+    Serial.print(code_hex);
+    Serial.println(")");
 
-    String code_hex = String(code, HEX);
+
 
 
     if (signal == prev_signal) {
@@ -74,8 +78,8 @@ void loop() {
       send = false;
     }
 
-    if (!(code_hex.indexOf("4b") == 0) || (code_hex.indexOf("ff") == 0)) {
-      Serial.println("signal is not a type of Onky or LED - not send");
+    if (!(code_hex.startsWith("4b") || code_hex.startsWith("ff"))) {
+      Serial.println("signal is not a type of Onkyo or LED - not send");
       send = false;
     }
 
