@@ -84,10 +84,10 @@ void loop() {
     }
 
     if (send) {
-      timestamp = millis();
+      timestamp = millis()+100;
       prev_signal = signal;
 
-      irTransmitter.sendNEC(signal, 32);
+      irTransmitter.sendNEC(code, 32);
 
       Serial.print("NEC send: ");
       Serial.println(code_hex);
